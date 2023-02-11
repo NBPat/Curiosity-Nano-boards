@@ -1,42 +1,17 @@
-/* Intro to MPLAB X IDE mu.microchip.com/intro-to-the-mplab-x-ide */
-/* deluxe version */
-#include <xc.h>
-#pragma config WDTE = OFF
-#define _XTAL_FREQ 2000000      // need to add this, from exec version
-#define OFF 0
-#define ON 1
-// forward decs
-void delayOneSecond(void);
-void init(void);
-void setLED(int state);
-//vars
-int numBlinks = 5;
+/* https://github.com/MicrochipTech/Getting_Started_with_GPIO
+ */
 
-void main(void) {
-    init();
 
-    while (1) {
-        LATF &= 0xF7;
-        __delay_ms(800);
-        LATF |= 0x08;
-        __delay_ms(300);
-        return;
-    }
+#define F_CPU 3333333
+#include <avr/io.h>
+#include <util/delay.h>
+
+void main(void) {   PORTB.DIR |= PIN5_bm;
+while(1){
+    PORTB.OUT |= PIN5_bm;
+    _delay_ms(400);
+     PORTB.OUT &= ~PIN5_bm;
+    _delay_ms(1200);   
 }
-// init
-
-void init(void) {
-    ANSELF &= 0xF7;
-    TRISF &= 0xF7;
-}
-//setLED
-
-void setLED(int state) {
-    if (state == ON)LATF &= 0xF7;
-    else LATF |= 0x08;
-}
-// delayOneSecond
-
-void delayOneSecond(void) {
-    __delay_ms(1000);
+    return;
 }
